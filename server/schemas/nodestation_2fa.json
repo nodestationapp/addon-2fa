@@ -1,0 +1,37 @@
+{
+  "display_name": "name",
+  "tableName": "nodestation_2fa",
+  "fields": [
+    {
+      "name": "ID",
+      "slug": "id",
+      "type": "id",
+      "required": true,
+      "origin": "system",
+      "primary_key": true,
+      "default": "generate_id()"
+    },
+    {
+      "name": "User",
+      "slug": "user",
+      "type": "id",
+      "origin": "system",
+      "required": true
+    },
+    {
+      "name": "Secret",
+      "slug": "secret",
+      "type": "text",
+      "origin": "system",
+      "required": true
+    },
+    {
+      "name": "Created at",
+      "slug": "created_at",
+      "type": "date",
+      "origin": "system",
+      "required": true,
+      "default": "now()"
+    }
+  ]
+}
