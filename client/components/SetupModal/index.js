@@ -40,6 +40,9 @@ const SetupModal = ({ open, onClose }) => {
   if (step === 1)
     return (
       <SetupConfirmModal
+        title="Verify Authentication Code"
+        description="Enter the 6-digit code from your authenticator app."
+        buttonText="Complete 2-Factor Authentication"
         open={secrets?.secret?.base32}
         onClose={() => setStep(0)}
         onCloseAll={() => {

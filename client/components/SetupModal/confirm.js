@@ -16,9 +16,16 @@ import { api } from "@nstation/design-system/utils";
 
 import { useTwoFactorAuthMiddleware } from "../../contexts/TwoFactorAuthMiddleware.js";
 
-const SetupConfirmModal = ({ open, onClose, onCloseAll }) => {
+const SetupConfirmModal = ({
+  open,
+  onClose,
+  onCloseAll,
+  title,
+  description,
+  buttonText,
+}) => {
   const theme = useTheme();
-  const { refetch } = useTwoFactorAuthMiddleware();
+  const { hasTwoFactorAuth, refetch } = useTwoFactorAuthMiddleware();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
 
   const [otp, setOtp] = useState("");
@@ -28,10 +35,17 @@ const SetupConfirmModal = ({ open, onClose, onCloseAll }) => {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      await api.post("/admin-api/auth/2fa/setup/verify", {
-        secret: open,
-        token: otp,
-      });
+
+      if (hasTwoFactorAuth) {
+        await api.post("/admin-api/auth/2fa/disable", {
+          token: otp,
+        });
+      } else {
+        await api.post("/admin-api/auth/2fa/setup/verify", {
+          secret: open,
+          token: otp,
+        });
+      }
 
       refetch();
       onCloseAll();
@@ -66,14 +80,14 @@ const SetupConfirmModal = ({ open, onClose, onCloseAll }) => {
         }}
       >
         <Typography variant="h5" textAlign="center" mt={2}>
-          Verify Authentication Code
+          {title}
         </Typography>
         <DialogContentText
           id="alert-dialog-description"
           textAlign="center"
           mb={4}
         >
-          Enter the 6-digit code from your authenticator app.
+          {description}
         </DialogContentText>
         <Box
           display="flex"
@@ -98,7 +112,7 @@ const SetupConfirmModal = ({ open, onClose, onCloseAll }) => {
           disabled={otp.length !== 6}
           endIcon={<ArrowForward sx={{ height: 16, width: 16 }} />}
         >
-          Complete 2-Factor Authentication
+          {buttonText}
         </Button>
       </DialogContent>
     </Dialog>

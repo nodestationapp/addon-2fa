@@ -38,7 +38,8 @@ const OtpInputComponent = ({ value, loading, error, onChange }) => {
 
                   ".MuiOutlinedInput-root": {
                     height: 50,
-                    width: 50,
+                    maxWidth: 50,
+                    width: "100%",
 
                     ".MuiOutlinedInput-input": {
                       textAlign: "center",

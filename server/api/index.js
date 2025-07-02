@@ -4,7 +4,7 @@ import setup from "./setup.js";
 import verify from "./verify.js";
 import jwtVerify from "./jwtVerify.js";
 import setupVerify from "./setupVerify.js";
-
+import disable from "./disable.js";
 import authMiddleware from "@nstation/auth/utils/authMiddleware.js";
 
 export default [
@@ -44,6 +44,13 @@ export default [
     method: "GET",
     path: "/auth/2fa",
     handler: get,
+    type: "admin",
+    middlewares: [authMiddleware(["admin"])],
+  },
+  {
+    method: "POST",
+    path: "/auth/2fa/disable",
+    handler: disable,
     type: "admin",
     middlewares: [authMiddleware(["admin"])],
   },

@@ -89,7 +89,7 @@ const VerifyContent = () => {
             component="h1"
             variant="h4"
             textAlign="center"
-            sx={{ width: "100%", fontSize: 20 }}
+            sx={{ width: "100%", fontSize: 20, mb: 1 }}
           >
             Please enter 2FA code
           </Typography>
@@ -124,6 +124,7 @@ const VerifyContent = () => {
             color="primary"
             variant="contained"
             sx={{ mt: 4 }}
+            disabled={formik.values.token.length !== 6}
             loading={formik.isSubmitting}
           >
             Verify

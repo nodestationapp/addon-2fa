@@ -8,12 +8,13 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 import { useTwoFactorAuthMiddleware } from "../../contexts/TwoFactorAuthMiddleware.js";
+import DisableModal from "../../components/SetupModal/DisableModal.js";
 
 const Settings = () => {
   const { hasTwoFactorAuth } = useTwoFactorAuthMiddleware();
 
   const [setupModalOpen, setSetupModalOpen] = useState(false);
-
+  const [disableModalOpen, setDisableModalOpen] = useState(false);
   return (
     <>
       <Card variant="outlined" sx={{ maxWidth: 400, width: "100%" }}>
@@ -34,7 +35,7 @@ const Settings = () => {
               <Button
                 color="primary"
                 variant="text"
-                onClick={() => setSetupModalOpen(true)}
+                onClick={() => setDisableModalOpen(true)}
               >
                 Disable
               </Button>
@@ -55,6 +56,10 @@ const Settings = () => {
       <SetupModal
         open={setupModalOpen}
         onClose={() => setSetupModalOpen(false)}
+      />
+      <DisableModal
+        open={disableModalOpen}
+        onClose={() => setDisableModalOpen(false)}
       />
     </>
   );

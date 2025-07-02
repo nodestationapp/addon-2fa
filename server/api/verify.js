@@ -30,15 +30,18 @@ export default async (req, res) => {
     }
 
     const access_token = jwt.sign(
-      {
-        id: jwtData?.user,
-        iat: new Date().getTime(),
-        exp: new Date().setDate(new Date().getDate() + 1),
-      },
-      process.env.TOKEN_SECRET
+      { id: jwtData?.user },
+      process.env.TOKEN_SECRET,
+      { expiresIn: "15m" }
     );
 
-    return res.status(200).json({ access_token });
+    const refresh_token = jwt.sign(
+      { id: jwtData?.user },
+      process.env.TOKEN_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    return res.status(200).json({ access_token, refresh_token });
   } catch (err) {
     console.error(err);
     return res.status(500).json(err);
